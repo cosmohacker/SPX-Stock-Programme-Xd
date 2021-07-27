@@ -15,14 +15,16 @@ const url = require('url')
 // Copy paste fixed by this 
 
 app.on('ready', () => {
-//  createWindow() // commented for avoiding double window issue
+  //  createWindow() // commented for avoiding double window issue
   if (process.platform === 'darwin') {
     var template = [{
       label: 'FromScratch',
       submenu: [{
         label: 'Quit',
         accelerator: 'CmdOrCtrl+Q',
-        click: function() { app.quit(); }
+        click: function () {
+          app.quit();
+        }
       }]
     }, {
       label: 'Edit',
@@ -63,13 +65,13 @@ app.on('ready', () => {
 const PHPServer = require('php-server-manager');
 
 const server = new PHPServer({
-  
-    port: 5555,
-    directory: __dirname,
-    directives: {
-        display_errors: 1,
-        expose_php: 1
-    }
+  php: "/usr/bin/php",
+  port: 5555,
+  directory: __dirname,
+  directives: {
+    display_errors: 4,
+    expose_php: 1
+  }
 });
 
 //////////////////////////
@@ -78,24 +80,40 @@ const server = new PHPServer({
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
+function createWindow() {
 
   server.run();
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    frame: false,
+    icon: __dirname + '/contents/electron/img/spx_icon.png',
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: false, // is default value after Electron v5
+      contextIsolation: true, // protect against prototype pollution
+      enableRemoteModule: true, // turn off remote
+    },
+  })
 
+  process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
+  
   // and load the index.html of the app.
-  mainWindow.loadURL('http://'+server.host+':'+server.port+'/')
+  mainWindow.loadURL('http://' + server.host + ':' + server.port + '/views/home/master.php')
+  //mainWindow.loadURL('http://' + server.host + '/SPX-Stock-Programme-Xd/views/home/master.php')
 
-/*
-mainWindow.loadURL(url.format({
-  pathname: path.join(__dirname, 'index.php'),
-  protocol: 'file:',
-  slashes: true
-}))
-*/
- const {shell} = require('electron')
- shell.showItemInFolder('fullPath')
+  /*
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.php'),
+    protocol: 'file:',
+    slashes: true
+  }))
+  */
+  const {
+    shell
+  } = require('electron')
+  shell.showItemInFolder('fullPath')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

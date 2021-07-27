@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/titleBar.css">
+
+</head>
+
+<body>
+    <script>
+        window.api.receive("fromMain", (data) => {
+            console.log(`Received ${data} from main process`);
+        });
+        window.api.send("toMain", "some data");
+    </script>
+    <div id="title-bar" style="position: fixed; width: 100%; z-index: 10; -webkit-box-shadow: 0px 5px 7px 0px rgba(0,0,0,0.42);
+    -moz-box-shadow: 0px 5px 7px 0px rgba(0,0,0,0.42);
+    box-shadow: 0px 5px 7px 0px rgba(0,0,0,0.42);">
+        <div id="title">
+            <span style="vertical-align: sub;"><img src="../../contents/custom/admin/img/spx_logo.png"
+                    style="width: 55%;height: auto;" /></span>
+        </div>
+        <div id="title-mid">
+            <a href="http://www.yagizcanyavuz.ninja" target="_blank">cosmohacker</a>
+
+        </div>
+        <div id="title-bar-btns">
+            <button class="titlebar-button" id="min-btn"><i class="fa fa-window-minimize"></i></button>
+            <button class="titlebar-button" id="max-btn"><i class="fa fa-compress"></i></button>
+            <button class="titlebar-button" id="close-btn"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+
+    <script src="../js/windowScript.js"></script>
+
+
+</body>
+
+</html>

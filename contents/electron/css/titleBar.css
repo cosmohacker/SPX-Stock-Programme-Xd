@@ -1,0 +1,36 @@
+#title-bar {
+  -webkit-app-region: drag;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  vertical-align: middle;
+  background-color: #fff;
+  padding: none;
+  margin: 0px;
+  
+}
+
+body{
+	margin:0;
+	padding:0;
+	}
+
+.titlebar-button{
+  background: transparent;
+  cursor: pointer;
+  display: contents;
+}
+
+#title {
+  position: fixed;
+  top: 0px;
+  left: 6px;
+  color: white;
+}
+
+#title-bar-btns {
+  -webkit-app-region: no-drag;
+  position: fixed;
+  top: 0px;
+  right: 6px;
+}
